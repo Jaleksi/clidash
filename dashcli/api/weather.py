@@ -1,6 +1,7 @@
 import requests
 from datetime import datetime
 from secret import WEATHER_API_KEY
+from conf import COORDINATES_FOR_WEATHER
 
 
 def fetch_data():
@@ -14,14 +15,10 @@ def fetch_data():
         }
     '''
     api_url = 'http://api.openweathermap.org/data/2.5/onecall'
-    coords = {
-        'latitude': 65.012011,
-        'longitude': 25.483423
-    }
     param = {
         'appid': WEATHER_API_KEY,
-        'lat': coords['latitude'],
-        'lon': coords['longitude'],
+        'lat': COORDINATES_FOR_WEATHER['oulu']['lat'],
+        'lon': COORDINATES_FOR_WEATHER['oulu']['lon'],
         'exclude': 'minutely,alerts',
         'units': 'metric'
     }

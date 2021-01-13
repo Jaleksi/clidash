@@ -3,11 +3,8 @@ import urwid
 from blocks.hobby_block import HobbyBlock
 from blocks.timedate_block import TimedateBlock
 from blocks.weather_block import WeatherBlock
+from conf import PALETTE
 
-PALETTE = [
-    ('normal', 'dark blue', 'dark gray'),
-    ('inverse', 'dark gray', 'dark blue'),
-]
 
 class DashCli:
     def __init__(self):

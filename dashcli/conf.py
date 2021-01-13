@@ -1,3 +1,15 @@
+PALETTE = [
+    ('normal', 'dark blue', 'dark gray'),
+    ('inverse', 'dark gray', 'dark blue'),
+]
+
+COORDINATES_FOR_WEATHER = {
+    'oulu': {
+        'lat': 65.012011,
+        'lon': 25.483423
+    }
+}
+
 WEATHER_ICON_MAP = {
     '01d': b'\xE2\x98\x80', # ☀
     '01n': b'\xF0\x9F\x8C\x99', # 🌙
