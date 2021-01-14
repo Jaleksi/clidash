@@ -4,9 +4,8 @@ from conf import WEEKDAYS_ABR
 
 
 class TimedateBlock(urwid.Pile):
-    def __init__(self, update_method):
+    def __init__(self):
         self.update_interval = 1
-        self.request_update = update_method
         self.current_time = None
         self.current_date = None
 
@@ -16,17 +15,13 @@ class TimedateBlock(urwid.Pile):
         ]
         super().__init__(self.layout)
 
-    def update(self, *args):
-        '''
-            mainloop gives self and userdata=None as arguments
-            when calling trough loop.set_alarm_in
-        '''
+    def update(self, main_loop=None, data=None):
         now = dt.now()
         time_now = now.strftime('%H:%M:%S')
         date_now = WEEKDAYS_ABR[now.strftime('%A')] + now.strftime(' %d.%m.%Y')
         self.current_time.set_text(time_now)
         self.current_date.set_text(date_now)
-        self.request_update(self.update_interval, self)
+        main_loop.set_alarm_in(self.update_interval, self.update)
 
     def build_time(self):
         time_now = 'Loading...'

@@ -5,21 +5,22 @@ class HobbyBlock(urwid.LineBox):
     def __init__(self):
         self.popularity = fetch_data()
 
-        self.layout = urwid.Pile(self.build_place_table())
+        self.layout = self.build_place_table()
         super().__init__(self.layout, title='Sijaintien suosio')
 
     def update(self):
         self.popularity = fetch_data()
 
     def build_place_table(self):
-        table_items = []
+        pop_text = ''
+        places_text = ''
 
         for name, popularity in self.popularity.items():
-            pop_text = f'{popularity} %'
-            place_layout = urwid.Columns([
-                    urwid.Filler(urwid.Text(name, align='left'), valign='middle'),
-                    urwid.Filler(urwid.Text(pop_text, align='right'), valign='middle')
-                ])
-            table_items.append(place_layout)
+            pop_text += f'{popularity} %\n'
+            places_text += f'{name}\n'
         
-        return table_items
+        place_layout = urwid.Columns([
+                urwid.Filler(urwid.Text(places_text, align='left'), valign='middle'),
+                (4, urwid.Filler(urwid.Text(pop_text, align='right'), valign='middle'))
+            ])
+        return place_layout

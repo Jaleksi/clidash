@@ -9,7 +9,7 @@ from conf import PALETTE
 class DashCli:
     def __init__(self):
         self.blocks = {
-            'timedate': TimedateBlock(self.set_update),
+            'timedate': TimedateBlock(),
             'weather': WeatherBlock(),
             'hobby': HobbyBlock()
         }
@@ -32,11 +32,8 @@ class DashCli:
         self.loop.run()
 
     def init_alarms(self):
-        for block in [self.blocks['timedate']]:
-            block.update()
-
-    def set_update(self, interval, requester):
-        self.loop.set_alarm_in(interval, requester.update)
+        for block in [self.blocks['timedate'], self.blocks['weather']]:
+            block.update(self.loop)
 
 
 if __name__ == '__main__':
