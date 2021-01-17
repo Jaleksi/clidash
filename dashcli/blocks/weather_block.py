@@ -4,8 +4,9 @@ from conf import WEEKDAYS_ABR, WEATHER_ICON_MAP
 from datetime import datetime
 
 class WeatherBlock(urwid.Pile):
-    def __init__(self):
-        self.update_interval = 900
+    def __init__(self, use_emojis=True):
+        self.icons = use_emojis
+        self.update_interval = 1800
         self.daily_forecast_count = 5
         self.hourly_forecast_count = 8
         
@@ -39,15 +40,22 @@ class WeatherBlock(urwid.Pile):
 
         for forecast, hour_slot in zip(weather_data['hour_forecast'], self.text_map['hourly_forecasts']):
                 hour_slot['time'].set_text(str(forecast['time']))
-                hour_slot['icon'].set_text(WEATHER_ICON_MAP[forecast['icon']])
                 hour_slot['temp'].set_text(str(int(forecast['temp'])))
+                if self.icons:
+                    hour_slot['icon'].set_text(WEATHER_ICON_MAP[forecast['icon']])
+                else:
+                    hour_slot['icon'].set_text(f'{forecast["cor"]}%')
 
         for forecast, day_slot in zip(weather_data['day_forecast'], self.text_map['daily_forecasts']):
                 day_slot['day'].set_text(WEEKDAYS_ABR[forecast['day']])
-                day_slot['icon'].set_text(WEATHER_ICON_MAP[forecast['icon']])
                 day_slot['temp'].set_text(f'{forecast["temp_max"]}/{forecast["temp_min"]}')
+                if self.icons:
+                    day_slot['icon'].set_text(WEATHER_ICON_MAP[forecast['icon']])
+                else:
+                    day_slot['icon'].set_text(f'{forecast["cor"]}%')
 
-        self.text_map['last_updated'].set_text('Päivitetty ' + datetime.now().strftime('%H:%M'))
+        updated_text = weather_data['current_desc'] + datetime.now().strftime(' [%H:%M]')
+        self.text_map['last_updated'].set_text(updated_text)
         main_loop.set_alarm_in(self.update_interval, self.update)
 
     def build_current_weather(self):

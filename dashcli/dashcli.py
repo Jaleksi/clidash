@@ -10,7 +10,7 @@ class DashCli:
     def __init__(self):
         self.blocks = {
             'timedate': TimedateBlock(),
-            'weather': WeatherBlock(),
+            'weather': WeatherBlock(use_emojis=False),
             'location': LocationPopularityBlock()
         }
         main_pile = urwid.Columns([
@@ -32,7 +32,7 @@ class DashCli:
         self.loop.run()
 
     def init_alarms(self):
-        for block in [self.blocks['timedate'], self.blocks['weather']]:
+        for _, block in self.blocks.items():
             block.update(self.loop)
 
 

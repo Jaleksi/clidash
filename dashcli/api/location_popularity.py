@@ -10,9 +10,9 @@ def fetch_data(debug=False):
 
     for name, place_id in LOCATION_IDS.items():
         if debug:
-            popularities[name] = random.randint(0, 100)
+            popularities[name] = random.randint(1, 99)
         else:
-            data = populartimes.get_id(GOOGLE_API_KEY, place_id)
-            popularities[name] = data['current_popularity']
+            data = populartimes.get_id('123', place_id)
+            popularities[name] = data.get('current_popularity', 'N/A')
 
     return popularities

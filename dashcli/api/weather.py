@@ -11,8 +11,9 @@ def fetch_data():
         {
             current_temp
             current_icon
-            day_corecast: [{day, temp_max, temp_min, icon} ...] (next 5 days)
-            hour_forecast: [{time, temp, icon} ...] (next 8 hours)
+            current_desc
+            day_corecast: [{day, temp_max, temp_min, icon, cor} ...] (next 5 days)
+            hour_forecast: [{time, temp, icon, cor} ...] (next 8 hours)
         }
     '''
     api_url = 'http://api.openweathermap.org/data/2.5/onecall'
@@ -34,6 +35,7 @@ def fetch_data():
     weather_data = {
         'current_temp': data['current']['temp'],
         'current_icon': data['current']['weather'][0]['icon'],
+        'current_desc': data['current']['weather'][0]['main'],
         'day_forecast': [],
         'hour_forecast': []
     }
@@ -43,12 +45,14 @@ def fetch_data():
         temp_max = int(day['temp']['max'])
         temp_min = int(day['temp']['min'])
         icon = day['weather'][0]['icon']
+        cor = int(day['pop'] * 100)
         
         weather_data['day_forecast'].append({
             'day': weekday,
             'temp_max': temp_max,
             'temp_min': temp_min,
-            'icon': icon
+            'icon': icon,
+            'cor': cor
         })
 
     now = datetime.now()
@@ -61,7 +65,8 @@ def fetch_data():
         weather_data['hour_forecast'].append({
             'time': time.strftime('%H'),
             'temp': hour['temp'],
-            'icon': hour['weather'][0]['icon']
+            'icon': hour['weather'][0]['icon'],
+            'cor': int(day['pop'] * 100)
         })
     
     return weather_data 
