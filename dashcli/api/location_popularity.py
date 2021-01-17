@@ -12,7 +12,7 @@ def fetch_data(debug=False):
         if debug:
             popularities[name] = random.randint(1, 99)
         else:
-            data = populartimes.get_id('123', place_id)
+            data = populartimes.get_id(GOOGLE_API_KEY, place_id)
             popularities[name] = data.get('current_popularity', 'N/A')
 
     return popularities
