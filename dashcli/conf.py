@@ -40,3 +40,10 @@ WEEKDAYS_ABR = {
     'Friday': 'Pe',
     'Saturday': 'La'
 }
+
+LOCATION_IDS = {
+    'Toppila fbg': 'ChIJDfknSXYtgEYRpNpayW1z8_k',
+    'Hiironen fbg': 'ChIJz8lmVRPNgUYRxN5b-bhkveA',
+    'Citymarket Rusko': 'ChIJqdRMPc_SgUYRPQB5U8pNbxg',
+    'K-Market Hiukkavaara': 'ChIJtVmZk_fTgUYRJbPtnsgVFEU'
+}

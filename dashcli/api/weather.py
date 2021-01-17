@@ -1,5 +1,6 @@
 import requests
 from datetime import datetime
+
 from secret import WEATHER_API_KEY
 from conf import COORDINATES_FOR_WEATHER
 

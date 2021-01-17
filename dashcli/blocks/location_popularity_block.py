@@ -1,15 +1,15 @@
 import urwid
 from api.location_popularity import fetch_data
 
-class HobbyBlock(urwid.LineBox):
+class LocationPopularityBlock(urwid.LineBox):
     def __init__(self):
-        self.popularity = fetch_data()
+        self.popularity = fetch_data(debug=True)
 
         self.layout = self.build_place_table()
         super().__init__(self.layout, title='Sijaintien suosio')
 
     def update(self):
-        self.popularity = fetch_data()
+        self.popularity = fetch_data(debug=True)
 
     def build_place_table(self):
         pop_text = ''

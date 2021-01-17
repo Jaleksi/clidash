@@ -45,9 +45,10 @@ class WeatherBlock(urwid.Pile):
         for forecast, day_slot in zip(weather_data['day_forecast'], self.text_map['daily_forecasts']):
                 day_slot['day'].set_text(WEEKDAYS_ABR[forecast['day']])
                 day_slot['icon'].set_text(WEATHER_ICON_MAP[forecast['icon']])
-                day_slot['temp'].set_text(f'{forecast["temp_min"]}/{forecast["temp_max"]}')
+                day_slot['temp'].set_text(f'{forecast["temp_max"]}/{forecast["temp_min"]}')
 
         self.text_map['last_updated'].set_text('Päivitetty ' + datetime.now().strftime('%H:%M'))
+        main_loop.set_alarm_in(self.update_interval, self.update)
 
     def build_current_weather(self):
         # Eri fontti?

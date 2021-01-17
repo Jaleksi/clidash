@@ -1,21 +1,18 @@
-#import populartimes
 import random
-#from secret import GOOGLE_API_KEY
+import populartimes
 
-PLACE_IDS = {
-    'Toppila fbg': 'ChIJDfknSXYtgEYRpNpayW1z8_k',
-    'Hiironen fbg': 'ChIJz8lmVRPNgUYRxN5b-bhkveA',
-    'Citymarket Rusko': 'hakematta',
-    'K-Market Hiukkavaara': 'hakematta'
-}
+from secret import GOOGLE_API_KEY
+from conf import LOCATION_IDS
 
 
-def fetch_data():
+def fetch_data(debug=False):
     popularities = {}
 
-    for name, place_id in PLACE_IDS.items():
-        #data = populartimes.get_id(GOOGLE_API_KEY, place_id)
-        #cur_popularity = data['current_popularity']
-        popularities[name] = random.randint(0, 100)
+    for name, place_id in LOCATION_IDS.items():
+        if debug:
+            popularities[name] = random.randint(0, 100)
+        else:
+            data = populartimes.get_id(GOOGLE_API_KEY, place_id)
+            popularities[name] = data['current_popularity']
 
     return popularities

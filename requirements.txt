@@ -1,2 +1,11 @@
+certifi==2020.12.5
+chardet==4.0.0
+geographiclib==1.50
+geopy==2.1.0
+idna==2.10
+numpy==1.19.5
 pkg-resources==0.0.0
-urwid==2.1.2
+populartimes @ git+https://github.com/m-wrzr/populartimes@3d3df3f306b6f65d7cf9f5c9387ea665bdfbf836
+requests==2.25.1
+urllib3==1.26.2
+urwid @ git+https://github.com/tonycpsu/urwid.git@2e7449f76ae53289b56596441022f2eedf32a360
