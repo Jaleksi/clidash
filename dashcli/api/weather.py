@@ -66,7 +66,7 @@ def fetch_data():
             'time': time.strftime('%H'),
             'temp': hour['temp'],
             'icon': hour['weather'][0]['icon'],
-            'cor': int(day['pop'] * 100)
+            'cor': int(hour['pop'] * 100)
         })
     
     return weather_data 
