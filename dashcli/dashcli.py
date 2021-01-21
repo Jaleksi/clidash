@@ -1,6 +1,7 @@
 import urwid
 
 from blocks.location_popularity_block import LocationPopularityBlock
+from blocks.sport_block import KarpatBlock
 from blocks.timedate_block import TimedateBlock
 from blocks.weather_block import WeatherBlock
 from conf import PALETTE
@@ -11,12 +12,16 @@ class DashCli:
         self.blocks = {
             'timedate': TimedateBlock(),
             'weather': WeatherBlock(use_emojis=False),
-            'location': LocationPopularityBlock()
+            'location': LocationPopularityBlock(),
+            'karpat': KarpatBlock()
         }
         main_pile = urwid.Columns([
             urwid.Pile([
                 (11, self.blocks['timedate']),
-                self.blocks['location']
+                urwid.Pile([
+                    self.blocks['location'],
+                    self.blocks['karpat']
+                ])
             ]),
             self.blocks['weather'],
         ])
