@@ -1,9 +1,11 @@
 import requests
-from datetime import date as _date
 from bs4 import BeautifulSoup
 
 
 def fetch_data():
+    '''
+        Dict keys match keys in blocks/sport_block.KarpatBlock text object dict.
+    '''
     URL = 'https://www.liiga.fi/fi/joukkueet/karpat/otteluohjelma'
     req = requests.get(URL)
 
@@ -13,44 +15,33 @@ def fetch_data():
     game_infos = []
 
     for game in games_table.find_all('tr'):
-        date = __format_date(game['data-time'])
+        playing_teams = game.find('a', {'href': True}).string.split()
+        home_game = playing_teams[0] == 'Kärpät'
+        opponent = playing_teams[2] if home_game else playing_teams[0]
         time = game.find('td', {'class': 'h-l'}).string
-        teams = game.find('a', {'href': True}).string.split()
-        home_game = teams[0] == 'Kärpät'
-        opponent = teams[2] if home_game else teams[0]
-        won = None
+
+        game_info = {
+            'date': __format_date(game['data-time']),
+            'location': '[KOTI]' if home_game else '[VIERAS]',
+            'opponent': opponent
+        }
+
         for i in range(4):
             found_match = game.find('div', {'class': f'points-{i}'})
             if found_match:
-                won = i > 0
+                game_info['won'] = '[V]' if i > 0 else '[H]'
+                game_info['result'] = game.find_all('td')[5].string.replace(' — ', '-')
 
-        result = None if won is None else game.find_all('td')[5].string.replace(' — ', '-')
+        game_infos.append(game_info)
 
-        game_infos.append(GameInfo(date, home_game, time, opponent, result, won))
-        if len(game_infos) > 4:
+        if len(game_infos) > 6:
             game_infos.pop(0)
-        if won is None:
+
+        if 'result' not in game_info:
+            game_info['result'] = time
             break
 
     return game_infos
-
-
-class GameInfo:
-    def __init__(self, date, home_game, time, opponent, result=None, won=None):
-        self.date = date
-        self.home_game = home_game
-        self.time = time
-        self.opponent = opponent
-        self.result = result
-        self.won = won
-
-    def pretty_line(self):
-        h = '[Koti]' if self.home_game else '[Vieras]'
-        t = '[V]' if self.won else '[H]'
-        if self.won is None:
-            return f'{h} {self.date} {self.time} {t} {self.opponent}'
-        else:
-            return f'{h} {self.date} {self.time} {t} {self.opponent} {self.result}'
 
 
 def __format_date(date_string):

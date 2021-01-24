@@ -2,7 +2,8 @@ import urwid
 from api.location_popularity import fetch_data
 
 class LocationPopularityBlock(urwid.LineBox):
-    def __init__(self):
+    def __init__(self, debug_mode=False):
+        self.debug_mode = debug_mode
         self.update_interval = 1800
         self.places_text = urwid.Text('---', align='left')
         self.popularity_text = urwid.Text('---', align='right')
@@ -10,7 +11,7 @@ class LocationPopularityBlock(urwid.LineBox):
         super().__init__(self.layout, title='Sijaintien suosio')
 
     def update(self, main_loop, user_data=None):
-        popularity_data = fetch_data()
+        popularity_data = fetch_data(debug=self.debug_mode)
         places, popularities = '', ''
 
         for name, popularity in popularity_data.items():
