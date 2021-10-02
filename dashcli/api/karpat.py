@@ -6,7 +6,7 @@ def fetch_data():
     '''
         Dict keys match keys in blocks/sport_block.KarpatBlock text object dict.
     '''
-    URL = 'https://www.liiga.fi/fi/joukkueet/karpat/otteluohjelma'
+    URL = 'https://old.liiga.fi/fi/ottelut/2021-2022/runkosarja/?team=karpat'
     req = requests.get(URL)
 
     content = BeautifulSoup(req.content, 'html.parser')
