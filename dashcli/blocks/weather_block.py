@@ -1,7 +1,6 @@
 import urwid
 from api.weather import fetch_data
-from conf import WEEKDAYS_ABR, WEATHER_ICON_MAP
-from datetime import datetime
+from conf import WEEKDAYS_ABR, WEATHER_ICON_MAP, WEATHER_DESC_FI
 
 class WeatherBlock(urwid.Pile):
     def __init__(self, use_emojis=True):
@@ -54,7 +53,7 @@ class WeatherBlock(urwid.Pile):
                 else:
                     day_slot['icon'].set_text(f'{forecast["cor"]}%')
 
-        updated_text = weather_data['current_desc'] + datetime.now().strftime(' [%H:%M]')
+        updated_text = WEATHER_DESC_FI[weather_data['current_desc']]
         self.text_map['last_updated'].set_text(updated_text)
         main_loop.set_alarm_in(self.update_interval, self.update)
 

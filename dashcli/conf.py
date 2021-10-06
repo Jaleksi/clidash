@@ -41,6 +41,25 @@ WEEKDAYS_ABR = {
     'Saturday': 'La'
 }
 
+WEATHER_DESC_FI = {
+    'Thunderstorm': 'Ukkosta',
+    'Drizzle': 'Tihkusadetta',
+    'Rain': 'Sadetta',
+    'Snow': 'Lumisadetta',
+    'Mist': 'Sumua',
+    'Smoke': 'Savua',
+    'Haze': 'Sumua',
+    'Dust': 'Polya',
+    'Fog': 'Sumua',
+    'Sand': 'Hiekkaa',
+    'Dust': 'Hiekkaa',
+    'Ash': 'Tuhkaa',
+    'Squall': 'Tuulenpuuskia',
+    'Tornado': 'Tornado',
+    'Clear': 'Kirkasta',
+    'Clouds': 'Pilvista'
+}
+
 LOCATION_IDS = {
     'Toppila fbg': 'ChIJDfknSXYtgEYRpNpayW1z8_k',
     'Hiironen fbg': 'ChIJz8lmVRPNgUYRxN5b-bhkveA',
