@@ -1,6 +1,5 @@
 import urwid
 
-from blocks.test_block import TestBlock
 from blocks.sport_block import KarpatBlock
 from blocks.timedate_block import TimedateBlock
 from blocks.weather_block import WeatherBlock

@@ -1,6 +1,6 @@
 PALETTE = [
-    ('normal', 'dark blue', 'dark gray'),
-    ('inverse', 'dark gray', 'dark blue'),
+    ('normal', 'black', 'white'),
+    ('inverse', 'white', 'black'),
 ]
 
 COORDINATES_FOR_WEATHER = {

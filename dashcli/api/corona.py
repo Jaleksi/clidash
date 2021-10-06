@@ -2,13 +2,13 @@ import requests
 from datetime import datetime, timedelta
 
 def fetch_data():
-    two_weeks = timedelta(days=30)
+    month = timedelta(days=30)
     today = datetime.now()
-    date_two_weeks_ago = today - two_weeks
+    date_month_ago = today - month
 
     base_url = 'https://api.covid19tracking.narrativa.com/api/country/finland'
     params = {
-        'date_from': date_two_weeks_ago.strftime('%Y-%m-%d'),
+        'date_from': date_month_ago.strftime('%Y-%m-%d'),
         'date_to': today.strftime('%Y-%m-%d')
     }
 
