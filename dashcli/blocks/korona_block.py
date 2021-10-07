@@ -5,7 +5,7 @@ class KoronaBlock(urwid.LineBox):
     def __init__(self):
         self.update_interval = 10800 # 3 hours
         self.graph = urwid.BarGraph(
-            ['inverse', 'normal'],
+            ['normal', 'inverse'],
             {(1, 0): 'normal'}
         )   
         super().__init__(self.graph, title='Korona')

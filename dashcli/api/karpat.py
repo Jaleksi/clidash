@@ -13,6 +13,7 @@ def fetch_data():
     games_table = content.find('table', {'class': 'games-list-table'}).find('tbody')
 
     game_infos = []
+    num_of_upcoming_games = 0
 
     for game in games_table.find_all('tr'):
         playing_teams = game.find('a', {'href': True}).string.split()
@@ -39,6 +40,9 @@ def fetch_data():
 
         if 'result' not in game_info:
             game_info['result'] = time
+            num_of_upcoming_games += 1
+
+        if num_of_upcoming_games > 2:
             break
 
     return game_infos

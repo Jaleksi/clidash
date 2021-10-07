@@ -1,6 +1,6 @@
 PALETTE = [
-    ('normal', 'black', 'white'),
-    ('inverse', 'white', 'black'),
+    ('normal', 'light gray', 'black'),
+    ('inverse', 'black', 'light gray'),
 ]
 
 COORDINATES_FOR_WEATHER = {
@@ -49,7 +49,7 @@ WEATHER_DESC_FI = {
     'Mist': 'Sumua',
     'Smoke': 'Savua',
     'Haze': 'Sumua',
-    'Dust': 'Polya',
+    'Dust': 'Pölyä',
     'Fog': 'Sumua',
     'Sand': 'Hiekkaa',
     'Dust': 'Hiekkaa',
@@ -57,7 +57,7 @@ WEATHER_DESC_FI = {
     'Squall': 'Tuulenpuuskia',
     'Tornado': 'Tornado',
     'Clear': 'Kirkasta',
-    'Clouds': 'Pilvista'
+    'Clouds': 'Pilvistä'
 }
 
 LOCATION_IDS = {
