@@ -1,7 +1,7 @@
 import urwid
 from api.karpat import fetch_data
 
-class KarpatBlock(urwid.Columns):
+class KarpatBlock(urwid.LineBox):
     def __init__(self):
         self.update_interval = 1800
         self.text_columns = {
@@ -12,7 +12,7 @@ class KarpatBlock(urwid.Columns):
             'result': urwid.Text('', align='left'),
         }
         self.layout = self.build_layout()
-        super().__init__(self.layout)
+        super().__init__(self.layout, title='Kärpät')
 
     def update(self, main_loop, user_data=None):
         games_data = fetch_data()
@@ -26,4 +26,5 @@ class KarpatBlock(urwid.Columns):
         main_loop.set_alarm_in(self.update_interval, self.update)
 
     def build_layout(self):
-        return [urwid.Filler(t, valign='middle') for _, t in self.text_columns.items()]
+        cols = [urwid.Filler(t, valign='middle') for _, t in self.text_columns.items()]
+        return urwid.Columns(cols)

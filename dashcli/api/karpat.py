@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def fetch_data():
+def fetch_data(matches_to_fetch=7):
     '''
         Dict keys match keys in blocks/sport_block.KarpatBlock text object dict.
     '''
@@ -35,7 +35,7 @@ def fetch_data():
 
         game_infos.append(game_info)
 
-        if len(game_infos) > 6:
+        if len(game_infos) > matches_to_fetch:
             game_infos.pop(0)
 
         if 'result' not in game_info:
