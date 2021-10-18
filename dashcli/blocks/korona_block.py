@@ -13,9 +13,7 @@ class KoronaBlock(urwid.LineBox):
     def update(self, main_loop, data=None):
         corona_data = fetch_data()
         data_values = [day['new_cases'] for day in corona_data]
-        print(data_values)
         data_values = fill_zero_values_in_data(data_values)
-        print(data_values)
         max_value = max(data_values)
 
         daily_cases = [(i,) for i in data_values]
