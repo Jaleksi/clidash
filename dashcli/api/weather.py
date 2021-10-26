@@ -5,15 +5,16 @@ from secret import WEATHER_API_KEY
 from conf import COORDINATES_FOR_WEATHER
 
 
-def fetch_data():
+def fetch_data(days_to_fetch=5, hours_to_fetch=8):
     '''
     returns:
         {
             current_temp
             current_icon
             current_desc
-            day_corecast: [{day, temp_max, temp_min, icon, cor} ...] (next 5 days)
-            hour_forecast: [{time, temp, icon, cor} ...] (next 8 hours)
+            day_corecast: [{day, temp_max, temp_min, icon, cor} ...]
+            hour_forecast: [{time, temp, icon, cor} ...]
+            sun_data: {rise, set}
         }
     '''
     api_url = 'http://api.openweathermap.org/data/2.5/onecall'
@@ -33,20 +34,25 @@ def fetch_data():
     data = req.json()
 
     weather_data = {
+        'dt': data['current']['dt'],
         'current_temp': data['current']['temp'],
         'current_icon': data['current']['weather'][0]['icon'],
         'current_desc': data['current']['weather'][0]['main'],
         'day_forecast': [],
-        'hour_forecast': []
+        'hour_forecast': [],
+        'sun_data': {
+            'rise': data['current']['sunrise'],
+            'set': data['current']['sunset']
+        }
     }
 
-    for day in data['daily'][1:6]:
+    for day in data['daily'][1:days_to_fetch + 1]:
         weekday = datetime.utcfromtimestamp(int(day['dt'])).strftime('%A')
         temp_max = int(day['temp']['max'])
         temp_min = int(day['temp']['min'])
         icon = day['weather'][0]['icon']
         cor = int(day['pop'] * 100)
-        
+
         weather_data['day_forecast'].append({
             'day': weekday,
             'temp_max': temp_max,
@@ -57,7 +63,7 @@ def fetch_data():
 
     now = datetime.now()
     for hour in data['hourly']:
-        if len(weather_data['hour_forecast']) == 8:
+        if len(weather_data['hour_forecast']) == hours_to_fetch:
             break
         time = datetime.utcfromtimestamp(int(hour['dt']))
         if time < now:
@@ -68,5 +74,5 @@ def fetch_data():
             'icon': hour['weather'][0]['icon'],
             'cor': int(hour['pop'] * 100)
         })
-    
+
     return weather_data 
