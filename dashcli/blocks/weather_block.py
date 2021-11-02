@@ -52,8 +52,8 @@ class WeatherBlock(urwid.Pile):
         for forecast, hour_slot in zip(weather_data['hour_forecast'], self.text_map['hourly_forecasts']):
                 hour_slot['time'].set_text(str(forecast['time']))
                 temp = int(forecast['temp'])
-                prefix = '+' if temp > 0 else '-'
-                hour_slot['temp'].set_text(prefix + str(temp))
+                temp = f'+{temp}' if temp > 0 else str(temp)
+                hour_slot['temp'].set_text(temp)
                 if self.icons:
                     hour_slot['icon'].set_text(WEATHER_ICON_MAP[forecast['icon']])
                 else:
@@ -62,9 +62,9 @@ class WeatherBlock(urwid.Pile):
         for forecast, day_slot in zip(weather_data['day_forecast'], self.text_map['daily_forecasts']):
                 day_slot['day'].set_text(WEEKDAYS_ABR[forecast['day']])
                 max_temp, min_temp = forecast['temp_max'], forecast['temp_min']
-                max_temp_prefix = '+' if max_temp > 0 else '-'
-                min_temp_prefix = '+' if min_temp > 0 else '-'
-                day_slot['temp'].set_text(f'{max_temp_prefix}{max_temp}/{min_temp_prefix}{min_temp}')
+                max_temp = f'+{max_temp}' if max_temp > 0 else str(max_temp)
+                min_temp = f'+{min_temp}' if min_temp > 0 else str(min_temp)
+                day_slot['temp'].set_text(f'{max_temp}/{min_temp}')
                 if self.icons:
                     day_slot['icon'].set_text(WEATHER_ICON_MAP[forecast['icon']])
                 else:
