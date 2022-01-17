@@ -30,7 +30,7 @@ def fetch_data(matches_to_fetch=7):
         for i in range(4):
             found_match = game.find('div', {'class': f'points-{i}'})
             if found_match:
-                game_info['won'] = '[V]' if i > 0 else '[H]'
+                game_info['won'] = '[V]' if i > 1 else '[H]'
                 game_info['result'] = game.find_all('td')[5].string.replace(' — ', '-')
 
         game_infos.append(game_info)
