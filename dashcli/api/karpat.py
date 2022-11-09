@@ -6,32 +6,32 @@ def fetch_data(matches_to_fetch=7):
     '''
         Dict keys match keys in blocks/sport_block.KarpatBlock text object dict.
     '''
-    URL = 'https://old.liiga.fi/fi/ottelut/2021-2022/runkosarja/?team=karpat'
+    URL = 'https://www.jatkoaika.com/Joukkue/karpat/ottelut?season=48258'
     req = requests.get(URL)
 
     content = BeautifulSoup(req.content, 'html.parser')
-    games_table = content.find('table', {'class': 'games-list-table'}).find('tbody')
-
+    games_table = content.find('h3', string='runkosarja').find_next_siblings('div')
     game_infos = []
     num_of_upcoming_games = 0
 
-    for game in games_table.find_all('tr'):
-        playing_teams = game.find('a', {'href': True}).string.split()
+    for game in games_table:
+        playing_teams = game.find('div', {'class': 'schedule-teams'}).text.split()
         home_game = playing_teams[0] == 'Kärpät'
         opponent = playing_teams[2] if home_game else playing_teams[0]
-        time = game.find('td', {'class': 'h-l'}).string
-
+        date_and_time = game.findAll('span', {'class': 'date-display-single'})
+        time = date_and_time[1].text.replace('.', ':')
+        date = date_and_time[0].text[3:]
         game_info = {
-            'date': __format_date(game['data-time']),
+            'date': date,
             'location': '[KOTI]' if home_game else '[VIERAS]',
             'opponent': opponent
         }
-
-        for i in range(4):
-            found_match = game.find('div', {'class': f'points-{i}'})
-            if found_match:
-                game_info['won'] = '[V]' if i > 1 else '[H]'
-                game_info['result'] = game.find_all('td')[5].string.replace(' — ', '-')
+        score = game.find('div', {'class': 'schedule-score line'}).text.strip()
+        if score:
+            win = game.find('div', {'class': 'win'})
+            ot_win = game.find('div', {'class': 'ot-win'})
+            game_info['won'] = '[V]' if win or ot_win else '[H]'
+            game_info['result'] = score
 
         game_infos.append(game_info)
 
