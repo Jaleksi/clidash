@@ -3,6 +3,7 @@ import urwid
 from blocks.karpat_block import KarpatBlock
 from blocks.timedate_block import TimedateBlock
 from blocks.weather_block import WeatherBlock
+from blocks.deadlines_block import DeadlinesBlock
 from conf import PALETTE
 
 
@@ -11,12 +12,14 @@ class DashCli:
         self.blocks = {
             'timedate': TimedateBlock(),
             'weather': WeatherBlock(use_emojis=False),
-            'karpat': KarpatBlock()
+            'karpat': KarpatBlock(),
+            'deadlines': DeadlinesBlock()
         }
         main_pile = urwid.Columns([
             urwid.Pile([
                 (11, self.blocks['timedate']),
                 urwid.Pile([
+                    self.blocks['deadlines'],
                     self.blocks['karpat']
                 ])
             ]),

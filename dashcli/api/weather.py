@@ -9,6 +9,7 @@ def fetch_data(days_to_fetch=5, hours_to_fetch=8):
     '''
     returns:
         {
+            dt (current time in epoch)
             current_temp
             current_icon
             current_desc
