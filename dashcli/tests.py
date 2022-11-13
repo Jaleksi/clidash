@@ -31,7 +31,7 @@ class TestKarpatApi(unittest.TestCase):
                 self.assertRegex(game['result'], '\d+-\d+', f'Invalid result: {game["result"]}')
             else:
                 self.assertRegex(game['result'], '\d{2}:\d{2}', f'Invalid result: {game["result"]}')
-                
+
     def test_opponent_validity(self):
         valid_opponents = [
             'Ässät',
@@ -56,7 +56,7 @@ class TestKarpatApi(unittest.TestCase):
         for game in self.games_data:
             date = game['date']
             self.assertRegex(date, '\d{1,2}\.\d{1,2}', f'Invalid date: {date}')
-        
+
 
 class TestWeatherApi(unittest.TestCase):
     def setUp(self):
@@ -100,7 +100,7 @@ class TestWeatherApi(unittest.TestCase):
     def test_sun_data(self):
         sunrise = self.data['sun_data']['rise']
         sunset = self.data['sun_data']['set']
-        
+
         assert sunrise is not None
         assert sunset is not None
 
@@ -128,6 +128,35 @@ class TestWeatherApi(unittest.TestCase):
             assert daily['day'] in self.weekdays_map
             assert daily['temp_min'] <= daily['temp_max']
             assert -1 < daily['cor'] < 101
+
+
+class TestDeadlinesApi(unittest.TestCase):
+    def setUp(self):
+        import datetime
+        from api.deadlines import fetch_data
+        self.datetime_object_type = datetime.datetime
+        self.data = fetch_data()
+
+    def test_status_code(self):
+        self.assertEqual(200, self.data['code'])
+
+    def test_data_types(self):
+        self.assertEqual(dict, type(self.data))
+        self.assertEqual(int, type(self.data['code']))
+        self.assertEqual(list, type(self.data['deadlines']))
+
+    def test_keys_exist(self):
+        assert 'deadlines' in self.data
+        for deadline in self.data['deadlines']:
+            self.assertEqual(dict, type(deadline))
+
+            assert 'title' in deadline
+            assert deadline['title'] is not None
+            self.assertEqual(str, type(deadline['title']))
+
+            assert 'date' in deadline
+            assert deadline['date'] is not None
+            self.assertEqual(self.datetime_object_type, type(deadline['date']))
 
 
 if __name__ == '__main__':

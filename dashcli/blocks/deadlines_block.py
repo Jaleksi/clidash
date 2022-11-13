@@ -1,21 +1,19 @@
 import urwid
+from api.deadlines import fetch_data
 
 class DeadlinesBlock(urwid.LineBox):
     def __init__(self):
         self.update_interval = 900 # 15 minutes
         self.text_columns = {
             'title': urwid.Text('', align='left', wrap='ellipsis'),
-            'time': urwid.Text('', align='right', wrap='ellipsis'),
+            'date_string': urwid.Text('', align='right', wrap='ellipsis'),
         }
         self.layout = self.build_layout()
         super().__init__(self.layout, title='Deadlinet')
 
     def update(self, main_loop, user_data=None):
-        deadlines_data = [
-            {'title': 'Tentti jostakin aiheesta tämä on pitkä rivi', 'time': '12.12.2021'}
-            for _ in range(8)
-        ]
-            
+        # deadlines should be in correct order (earliest first)
+        deadlines_data = fetch_data()
 
         for data_title, text_obj in self.text_columns.items():
             new_text = ''
@@ -28,7 +26,8 @@ class DeadlinesBlock(urwid.LineBox):
 
     def build_layout(self):
         cols = [
-            urwid.Filler(self.text_columns['title'], valign='middle'),
+            urwid.Filler(self.text_columns['title']
+            , valign='middle'),
             (11, urwid.Filler(self.text_columns['time'], valign='middle'))
         ]
         return urwid.Columns(cols)
