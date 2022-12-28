@@ -3,7 +3,7 @@ from datetime import datetime
 from ruuvitag_sensor.ruuvi import RuuviTagSensor
 
 from secret import WEATHER_API_KEY, RUUVITAG_MAC
-from conf import COORDINATES_FOR_WEATHER, USE_ROOVITAG_FOR_CURRENT_WEATHER
+from conf import COORDINATES_FOR_WEATHER, USE_RUUVITAG_FOR_CURRENT_WEATHER
 
 
 def fetch_data(days_to_fetch=5, hours_to_fetch=8):
@@ -36,7 +36,7 @@ def fetch_data(days_to_fetch=5, hours_to_fetch=8):
     data = req.json()
 
     current_temp = data['current']['temp']
-    if USE_ROOVITAG_FOR_CURRENT_WEATHER:
+    if USE_RUUVITAG_FOR_CURRENT_WEATHER:
         sensor_data = RuuviTagSensor.get_data_for_sensors([RUUVITAG_MAC], 10)
         current_temp = sensor_data[RUUVITAG_MAC]['temperature']
 
