@@ -5,7 +5,11 @@ geographiclib==1.50
 geopy==2.1.0
 idna==2.10
 pkg-resources==0.0.0
+ptyprocess==0.7.0
+reactivex=4.0.4
 requests==2.25.1
+ruuvitag-sensor==2.0.0
 soupsieve==2.1
+typing-extensions==4.4.0
 urllib3==1.26.2
 urwid @ git+https://github.com/tonycpsu/urwid.git@2e7449f76ae53289b56596441022f2eedf32a360

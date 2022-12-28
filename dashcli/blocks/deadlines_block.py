@@ -17,7 +17,7 @@ class DeadlinesBlock(urwid.LineBox):
 
         for data_title, text_obj in self.text_columns.items():
             new_text = ''
-            for dl in deadlines_data:
+            for dl in deadlines_data['deadlines']:
                 title = dl.get(data_title, "")
                 new_text += f'{title}\n'
             text_obj.set_text(new_text)
@@ -26,8 +26,7 @@ class DeadlinesBlock(urwid.LineBox):
 
     def build_layout(self):
         cols = [
-            urwid.Filler(self.text_columns['title']
-            , valign='middle'),
-            (11, urwid.Filler(self.text_columns['time'], valign='middle'))
+            urwid.Filler(self.text_columns['title'], valign='middle'),
+            (11, urwid.Filler(self.text_columns['date_string'], valign='middle'))
         ]
         return urwid.Columns(cols)

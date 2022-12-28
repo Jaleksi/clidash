@@ -1,3 +1,5 @@
+USE_RUUVITAG_FOR_CURRENT_WEATHER = False
+
 PALETTE = [
     ('normal', 'light gray', 'black'),
     ('inverse', 'black', 'light gray'),

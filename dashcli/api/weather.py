@@ -1,8 +1,9 @@
 import requests
 from datetime import datetime
+from ruuvitag_sensor.ruuvi import RuuviTagSensor
 
-from secret import WEATHER_API_KEY
-from conf import COORDINATES_FOR_WEATHER
+from secret import WEATHER_API_KEY, RUUVITAG_MAC
+from conf import COORDINATES_FOR_WEATHER, USE_ROOVITAG_FOR_CURRENT_WEATHER
 
 
 def fetch_data(days_to_fetch=5, hours_to_fetch=8):
@@ -34,9 +35,14 @@ def fetch_data(days_to_fetch=5, hours_to_fetch=8):
 
     data = req.json()
 
+    current_temp = data['current']['temp']
+    if USE_ROOVITAG_FOR_CURRENT_WEATHER:
+        sensor_data = RuuviTagSensor.get_data_for_sensors([RUUVITAG_MAC], 10)
+        current_temp = sensor_data[RUUVITAG_MAC]['temperature']
+
     weather_data = {
         'dt': data['current']['dt'],
-        'current_temp': data['current']['temp'],
+        'current_temp': current_temp,
         'current_icon': data['current']['weather'][0]['icon'],
         'current_desc': data['current']['weather'][0]['main'],
         'day_forecast': [],

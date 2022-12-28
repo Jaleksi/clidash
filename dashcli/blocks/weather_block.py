@@ -45,7 +45,7 @@ class WeatherBlock(urwid.Pile):
             hours_to_fetch=self.hourly_forecast_count
         )
 
-        temp_now = int(weather_data['current_temp'])
+        temp_now = round(float(weather_data['current_temp']), 1)
         temp_now = f'+{temp_now}' if temp_now > 0 else str(temp_now)
         self.text_map['current_temp'].set_text(temp_now)
 
